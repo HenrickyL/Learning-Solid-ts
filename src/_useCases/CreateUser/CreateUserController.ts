@@ -13,6 +13,7 @@ export class CreateUserController implements IController<UserCreateRequest, User
         const result = await this.useCase.execute(request)
         return Created<UserCreateResponse>(result)
     }
+
     formatData(request: UserCreateRequest): UserCreateRequest{
         return request;
     }

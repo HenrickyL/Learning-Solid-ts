@@ -6,7 +6,7 @@ import { UserCreateRequest, UserCreateResponse } from './_useCases/CreateUser/Cr
 
 const router = Router();
 // create IUserRepository
-const createUserUC = new CreateUserUseCase(null);
+const createUserUC = new CreateUserUseCase(null, null);
 const userController = new CreateUserController(createUserUC);
 
 router.post('/users', adaptRoute<UserCreateRequest,UserCreateResponse>(userController));
