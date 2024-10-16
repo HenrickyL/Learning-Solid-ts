@@ -3,11 +3,13 @@ import { UserCreateRequest, UserCreateResponse } from "./CreateUserDTO";
 import { IUserRepository } from '../../repositories/IUserRepository';
 import { BadRequestException } from "../../_infra/Exceptions";
 import { User } from "../../entities/User";
+import { IMailProvider } from "../../providers/IMAilProvider";
 
 export class CreateUserUseCase implements IUseCase<UserCreateRequest, UserCreateResponse>{
 
     constructor(
-        private repository : IUserRepository
+        private repository : IUserRepository,
+        private mailProvider : IMailProvider
     ){}
 
     async execute(request: UserCreateRequest) : Promise<UserCreateResponse>{
@@ -18,6 +20,21 @@ export class CreateUserUseCase implements IUseCase<UserCreateRequest, UserCreate
 
         const user = new User(request);
         await this.repository.saveAsync(user);
+
+        await this.mailProvider.sendMailAsync({
+            to: {
+                name: user.name,
+                email: user.email
+            },
+            from: {
+                name: 'John Doe',
+                email: 'pXUeh@example.com'
+            },	
+            subject: 'Email Confirmation',
+            body: '<p>Wellcome</p>'
+        });
+
+
         return {
             name: user.name,
             email: user.email
