@@ -4,7 +4,6 @@ import { UserCreateRequest, UserCreateResponse } from "./CreateUserDTO";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
 export class CreateUserController implements IController<UserCreateRequest, UserCreateResponse>{
-
     constructor(
         private useCase : CreateUserUseCase
     ){}

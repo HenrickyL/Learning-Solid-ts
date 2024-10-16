@@ -3,7 +3,7 @@ import { UserCreateRequest, UserCreateResponse } from "./CreateUserDTO";
 import { IUserRepository } from '../../repositories/IUserRepository';
 import { BadRequestException } from "../../_infra/Exceptions";
 import { User } from "../../entities/User";
-import { IMailProvider } from "../../providers/IMAilProvider";
+import { IMailProvider } from "../../providers/IMailProvider";
 
 export class CreateUserUseCase implements IUseCase<UserCreateRequest, UserCreateResponse>{
 
@@ -21,21 +21,22 @@ export class CreateUserUseCase implements IUseCase<UserCreateRequest, UserCreate
         const user = new User(request);
         await this.repository.saveAsync(user);
 
-        await this.mailProvider.sendMailAsync({
-            to: {
-                name: user.name,
-                email: user.email
-            },
-            from: {
-                name: 'John Doe',
-                email: 'pXUeh@example.com'
-            },	
-            subject: 'Email Confirmation',
-            body: '<p>Wellcome</p>'
-        });
+        // await this.mailProvider.sendMailAsync({
+        //     to: {
+        //         name: user.name,
+        //         email: user.email
+        //     },
+        //     from: {
+        //         name: 'John Doe',
+        //         email: 'pXUeh@example.com'
+        //     },	
+        //     subject: 'Email Confirmation',
+        //     body: '<p>Wellcome</p>'
+        // });
 
 
         return {
+            id: user.id,
             name: user.name,
             email: user.email
         }

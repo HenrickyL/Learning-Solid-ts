@@ -6,6 +6,7 @@ export class UserCreateRequest{
 
 
 export class UserCreateResponse{
+    id: string
     name: string
     email: string
 }
